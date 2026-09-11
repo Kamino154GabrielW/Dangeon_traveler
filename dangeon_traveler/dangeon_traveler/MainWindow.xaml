@@ -1,0 +1,31 @@
+﻿<Window x:Class="dangeon_traveler.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dangeon_traveler"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Rectangle HorizontalAlignment="Left" Height="141" Margin="252,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="230" RenderTransformOrigin="0.46,0.481"/>
+        <Label x:Name="Enemie_HP_label" Content="HP  000/000" HorizontalAlignment="Left" Margin="313,154,0,0" VerticalAlignment="Top" Width="122" FontSize="20"/>
+        <Label Content="Atack:005" HorizontalAlignment="Left" Margin="487,39,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.482" FontSize="15"/>
+        <Label Content="iniciative:1" HorizontalAlignment="Left" Margin="487,101,0,0" VerticalAlignment="Top" FontSize="15"/>
+        <Label Content="defence:002" HorizontalAlignment="Left" Margin="484,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.58,0.521" Width="101" FontSize="15"/>
+        <Label Content="Skeleton" HorizontalAlignment="Right" Margin="0,10,548,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20"/>
+        <Label x:Name="amount_of_enemies" Content="enemies:01/01" HorizontalAlignment="Left" Margin="146,121,0,0" VerticalAlignment="Top" FontSize="15"/>
+        <Rectangle HorizontalAlignment="Center" Height="41" Margin="0,321,0,0" Stroke="Black" VerticalAlignment="Top" Width="780"/>
+        <Label x:Name="player_HP_label" Content="HP:000/000" HorizontalAlignment="Left" Margin="313,316,0,0" VerticalAlignment="Top" Width="188" FontSize="30" Height="52"/>
+        <Button x:Name="Atack_button" Content="Atack" HorizontalAlignment="Left" Margin="10,368,0,0" VerticalAlignment="Top" Height="57" Width="67" Click="Player_Atack_Button" MouseEnter="Atack_button_MouseEnter"/>
+        <Button x:Name="Defend_button" Content="Defend" HorizontalAlignment="Left" Margin="99,368,0,0" VerticalAlignment="Top" Height="57" Width="66" Click="Player_Defend_Button" MouseEnter="Defend_button_MouseEnter"/>
+        <Button x:Name="Skip_button" Content="Skip turn" HorizontalAlignment="Left" Margin="185,369,0,0" VerticalAlignment="Top" Height="56" Width="61" Click="Player_Skip_Button" MouseEnter="Skip_button_MouseEnter"/>
+        <Label Content="iniciative:1" HorizontalAlignment="Left" Margin="605,394,0,0" VerticalAlignment="Top" FontSize="15"/>
+        <Label Content="Atack:005" HorizontalAlignment="Left" Margin="702,362,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.482" FontSize="15"/>
+        <Label Content="defence:002" HorizontalAlignment="Left" Margin="689,394,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.58,0.521" Width="101" FontSize="15"/>
+        <Label x:Name="player_DFP_label" Content="DFP:000" HorizontalAlignment="Center" Margin="0,364,0,0" VerticalAlignment="Top" Width="128" RenderTransformOrigin="0.48,0.561" FontSize="20"/>
+        <Label x:Name="Enemie_DFP_label" Content="DFP:000" HorizontalAlignment="Left" Margin="399,191,0,0" VerticalAlignment="Top" Width="83" FontSize="18"/>
+        <TextBlock x:Name="wnik_akcji_label" HorizontalAlignment="Left" Margin="146,238,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="439" Height="54" Background="Black" Foreground="White" Padding="10,5,10,5"/>
+        <Label x:Name="Enemie_Shield_label" Content="Shild:000" HorizontalAlignment="Left" Margin="252,193,0,0" VerticalAlignment="Top" Width="83" FontSize="18"/>
+
+    </Grid>
+</Window>

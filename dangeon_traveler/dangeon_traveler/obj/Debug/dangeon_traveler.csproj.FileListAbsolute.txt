@@ -1,0 +1,15 @@
+F:\dangeon_traveler\dangeon_traveler\bin\Debug\dangeon_traveler.exe.config
+F:\dangeon_traveler\dangeon_traveler\bin\Debug\dangeon_traveler.exe
+F:\dangeon_traveler\dangeon_traveler\bin\Debug\dangeon_traveler.pdb
+F:\dangeon_traveler\dangeon_traveler\obj\Debug\dangeon_traveler.csproj.AssemblyReference.cache
+F:\dangeon_traveler\dangeon_traveler\obj\Debug\MainWindow.g.cs
+F:\dangeon_traveler\dangeon_traveler\obj\Debug\App.g.cs
+F:\dangeon_traveler\dangeon_traveler\obj\Debug\dangeon_traveler_MarkupCompile.cache
+F:\dangeon_traveler\dangeon_traveler\obj\Debug\dangeon_traveler_MarkupCompile.lref
+F:\dangeon_traveler\dangeon_traveler\obj\Debug\MainWindow.baml
+F:\dangeon_traveler\dangeon_traveler\obj\Debug\dangeon_traveler.g.resources
+F:\dangeon_traveler\dangeon_traveler\obj\Debug\dangeon_traveler.Properties.Resources.resources
+F:\dangeon_traveler\dangeon_traveler\obj\Debug\dangeon_traveler.csproj.GenerateResource.cache
+F:\dangeon_traveler\dangeon_traveler\obj\Debug\dangeon_traveler.csproj.CoreCompileInputs.cache
+F:\dangeon_traveler\dangeon_traveler\obj\Debug\dangeon_traveler.exe
+F:\dangeon_traveler\dangeon_traveler\obj\Debug\dangeon_traveler.pdb
