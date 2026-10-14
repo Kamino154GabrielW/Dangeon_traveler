@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.Eventing.Reader;
 using System.Security.Policy;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace dangeon_traveler
@@ -16,6 +17,7 @@ namespace dangeon_traveler
         public static class GlobalData
         {
             public static bool IsPlayerTurn { get; set; } = true;
+            public static int player_active_iniciative { get; set; } = 1;
         }
 
         public class Character
@@ -31,7 +33,7 @@ namespace dangeon_traveler
 
             public string C_Name { get; set; }
 
-            public Character(int hp, int dmg, int defense, int dfp,int inic ,string n)
+            public Character(int hp, int dmg, int defense, int dfp, int inic, string n)
             {
                 MaxHP = hp;
                 HP = hp;
@@ -39,8 +41,8 @@ namespace dangeon_traveler
                 Defense = defense;
                 DFP = dfp;
                 Shield = 0;
-                iniciative= inic;
-                C_Name= n;
+                iniciative = inic;
+                C_Name = n;
             }
 
         }
@@ -53,14 +55,17 @@ namespace dangeon_traveler
 
         public void StartBattle()
         {
-            player = new Character(50, 5, 2, 0,1,"knight");
-            enemy = new Character(45, 5, 1, 0,1,"Skeleton");
+           
+            player = new Character(50, 5, 2, 0, 1, "knight");
+            enemy = new Character(45, 5, 1, 0, 1, "Skeleton");
             PlayerTurn();
         }
 
         public void PlayerTurn()
-        {
+        { 
             GlobalData.IsPlayerTurn = true;
+            GlobalData.player_active_iniciative = player.iniciative;
+           
             if (player.HP <= 0)
             {
                 Game_over("");
@@ -69,46 +74,53 @@ namespace dangeon_traveler
             UpdateGui();
         }
 
-        public void EnemieTurn()
+        public async Task EnemieTurn()
         {
             GlobalData.IsPlayerTurn = false;
+            wnik_akcji_label.Text = "";
+            
+
             if (enemy.HP <= 0)
             {
                 Game_over("enemy");
+                return; // Stop execution if game is over
             }
-            Thread.Sleep(1000);
-
 
             UpdateGui();
+           
 
-            enemy.DFP += enemy.Defense;
+            wnik_akcji_label.Text = ""; 
 
-            // Roll 1 to 5 inclusive
-            int enemyMove = random.Next(1, 7 + (enemy.DFP / 2));
-
-            if (enemyMove == 1 || enemyMove == 2 || enemyMove == 3 || enemyMove == 4)
+            for (int i = 0; i < enemy.iniciative; i++)
             {
-                int damageDealt = Math.Max(0, enemy.DMG - player.Shield);
-                player.HP -= damageDealt;
+                await Task.Delay(1000);
+                enemy.DFP += enemy.Defense;
 
-                // Prevent HP from dropping below zero
-                if (player.HP < 0) player.HP = 0;
+                int enemyMove = random.Next(1, 7 + (enemy.DFP / 2));
 
-                wnik_akcji_label.Text = $"Enemy attacks you for {damageDealt} DMG";
-                PlayerTurn();
+                if (enemyMove <= 4) 
+                {
+                    int damageDealt = Math.Max(0, enemy.DMG - player.Shield);
+                    player.HP = Math.Max(0, player.HP - damageDealt);
+
+                    wnik_akcji_label.Text += $"Enemy attacks you for {damageDealt} DMG\n";
+                }
+                else if (enemyMove == 5) 
+                {
+                    wnik_akcji_label.Text += "Enemy does nothing\n";
+                }
+                else 
+                {
+                    enemy.Shield = enemy.DFP;
+                    enemy.DFP = 0;
+                    wnik_akcji_label.Text += $"Enemy shields himself \n Next turn deal -{enemy.Shield} dmg\n";
+                }
+
+                UpdateGui();
+               
             }
-            else if (enemyMove > 4)
-            {
-                enemy.Shield = enemy.DFP;
-                enemy.DFP = 0;
-                wnik_akcji_label.Text = $"Enemy shields himself \n Next turn deal  -{enemy.Shield}dmg";
-                PlayerTurn();
-            }
-            else if (enemyMove == 5)
-            {
-                wnik_akcji_label.Text = "Enemy does nothing";
-                PlayerTurn();
-            }
+            await Task.Delay(2000);
+            PlayerTurn();
         }
 
         public void Player_Atack_Button(object sender, RoutedEventArgs e)
@@ -124,7 +136,7 @@ namespace dangeon_traveler
 
                 wnik_akcji_label.Text = $"You attacked enemy for {damageDealt} DMG";
 
-                EnemieTurn();
+                player_iniciative_chek();
             }
         }
 
@@ -135,7 +147,7 @@ namespace dangeon_traveler
                 player.Shield = player.DFP;
                 player.DFP = 0;
 
-                EnemieTurn();
+                player_iniciative_chek();
             }
         }
 
@@ -145,7 +157,7 @@ namespace dangeon_traveler
             {
                 player.DFP += player.Defense * 2;
 
-                EnemieTurn();
+                player_iniciative_chek();
             }
         }
 
@@ -157,27 +169,37 @@ namespace dangeon_traveler
             player_DFP_label.Content = $"DFP: {player.DFP}";
             Enemie_Shield_label.Content = $"shild:{enemy.Shield}";
             Enemie_name_label.Content = enemy.C_Name;
+            Enemie_iniciative_label.Content = $"iniciative:{enemy.iniciative}";
+
+            player_iniciative_label.Content = $"iniciative:{player.iniciative}";
         }
 
         private void Atack_button_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            var accual_DMG = 0;
-            if (player.DMG - enemy.DFP > 0)
-            {
-                accual_DMG = player.DMG - enemy.DFP;
-            }
-            else { accual_DMG = 0; }
-            wnik_akcji_label.Text = $"Atack enemie for {player.DMG} dmg \n if he Defends: {accual_DMG} dmg";
+            
+                var accual_DMG = 0;
+                if (player.DMG - enemy.DFP > 0)
+                {
+                    accual_DMG = player.DMG - enemy.DFP;
+                }
+                else { accual_DMG = 0; }
+                wnik_akcji_label.Text = $"Atack enemie for {player.DMG} dmg \n if he Defends: {accual_DMG} dmg";
+            
         }
 
         private void Defend_button_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            wnik_akcji_label.Text = $"Shild yourself from {player.DFP}dmg \n if he atacks ";
+         
+           
+                wnik_akcji_label.Text = $"Shild yourself from {player.DFP}dmg \n if he atacks ";
+            
         }
 
         private void Skip_button_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            wnik_akcji_label.Text = "skip your turn";
+            
+                wnik_akcji_label.Text = "skip your turn";
+            
         }
         private void Game_over(String side)
         {
@@ -196,6 +218,15 @@ namespace dangeon_traveler
             enemy.HP = enemy.MaxHP;
             enemy.DFP = 0;
 
+        }
+        private void player_iniciative_chek()
+        {
+            GlobalData.player_active_iniciative -= 1;
+            UpdateGui();
+            if  ( GlobalData.player_active_iniciative < 1)
+            {
+                EnemieTurn();
+            }
         }
     }
 }
