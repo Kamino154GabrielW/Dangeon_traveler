@@ -44,6 +44,84 @@ namespace dangeon_traveler
                 iniciative = inic;
                 C_Name = n;
             }
+            public void create_new_enemie(string enemy_tier , double level)
+            {
+                
+                int New_Enemy_index = random.Next(1, 5 );
+                if (New_Enemy_index<3)
+                {
+                    MaxHP = Convert.ToInt32(Math.Floor(45 * level));
+                    HP = Convert.ToInt32(Math.Floor(45 * level));
+                    DMG = Convert.ToInt32(Math.Floor(5 * level)) ;
+                    Defense = Convert.ToInt32(Math.Floor(1 * level));
+                    DFP = 0;
+                    Shield = 0;
+                    iniciative = 1;
+                    C_Name = "Skeleton";
+                }
+                else if (New_Enemy_index == 3)
+                {
+                    MaxHP = 60;
+                    HP = 60;
+                    DMG = 4;
+                    Defense = 2;
+                    DFP = 0;
+                    Shield = 3;
+                    iniciative = 1;
+                    C_Name = "SkeletonKnight";
+                }
+                else
+                {
+                    MaxHP = 30;
+                    HP = 30;
+                    DMG = 6;
+                    Defense = 1;
+                    DFP = 0;
+                    Shield = 0;
+                    iniciative = 2;
+                    C_Name = "SkeletonArcher";
+
+                }
+                /*
+                  MaxHP = 70;
+                    HP = 70;
+                    DMG = 6;
+                    Defense = 0;
+                    DFP = 0;
+                    Shield = 0;
+                    iniciative = 1;
+                    C_Name = "Slime";
+
+                """ he will have higher chanse to do nothing """
+
+                ------------------------
+
+                 MaxHP = 100;
+                    HP = 35;
+                    DMG = 4;
+                    Defense = 1;
+                    DFP = 0;
+                    Shield = 0;
+                    iniciative = 2;
+                    C_Name = "lower vampire";
+
+                """ every turn he regains 1hp every atack he regains (50%of atack) HP  """
+
+                ------------------------
+
+                 MaxHP = 50;
+                    HP = 35;
+                    DMG = 1;
+                    Defense = 1;
+                    DFP = 0;
+                    Shield = 0;
+                    iniciative = 1;
+                    C_Name = "Skelton paladin";
+
+                """ when he skips turn he charges his atack (+1 dmg) i ma dodatkow alternatwny atak  zadajoncy 2xDmg ale potem ucinajonc dmg/2 """
+                 
+                 */
+            }
 
         }
 
@@ -57,7 +135,8 @@ namespace dangeon_traveler
         {
            
             player = new Character(50, 5, 2, 0, 1, "knight");
-            enemy = new Character(45, 5, 1, 0, 1, "Skeleton");
+            enemy = new Character(0, 0, 0, 0, 0, "enemie");
+            enemy.create_new_enemie("",1);
             PlayerTurn();
         }
 
@@ -228,5 +307,7 @@ namespace dangeon_traveler
                 EnemieTurn();
             }
         }
+        
+
     }
 }
